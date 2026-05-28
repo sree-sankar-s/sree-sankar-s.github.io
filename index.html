@@ -3,10 +3,737 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cine Drift Studios</title>
+  <title>Cinedrift Studios | Drone & Mobile Photography</title>
+  <meta name="description" content="Cinedrift Studios — Personal drone and mobile photography and videography portfolio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black:   #080808;
+      --dark:    #111111;
+      --dark2:   #1a1a1a;
+      --gold:    #c9a96e;
+      --gold-lt: #e8d5a3;
+      --white:   #f4f0e8;
+      --muted:   #888888;
+      --border:  rgba(201,169,110,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* Subtle film-grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ─── NAVIGATION ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 1.8rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 500;
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(12px);
+      padding: 1.1rem 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ─── HERO ─── */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 60%, rgba(201,169,110,0.04) 0%, transparent 70%),
+                  radial-gradient(ellipse at 20% 30%, rgba(13,20,40,0.6) 0%, transparent 60%);
+    }
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+      position: relative;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.8rem, 11vw, 9rem);
+      font-weight: 300;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.6s forwards;
+      position: relative;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      margin-top: 2.2rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.85s forwards;
+      position: relative;
+    }
+    .hero-cta {
+      margin-top: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1.05s forwards;
+      position: relative;
+    }
+    .btn-outline {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
+    }
+    .btn-outline:hover { background: var(--gold); color: var(--black); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.4s forwards;
+    }
+    .hero-scroll span {
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 55px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: pulseLine 2.5s ease infinite;
+    }
+
+    /* ─── COMMON SECTION ─── */
+    section { padding: 8rem 3rem; }
+    .section-label {
+      font-size: 0.63rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.08;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+
+    /* ─── PORTFOLIO ─── */
+    #work { background: var(--black); }
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+    }
+    .work-note {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      max-width: 280px;
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: 60px;
+      gap: 10px;
+    }
+
+    .p-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--dark2);
+    }
+    /* Bento-style layout */
+    .p-item:nth-child(1) { grid-column: 1 / 6;  grid-row: 1 / 8; }
+    .p-item:nth-child(2) { grid-column: 6 / 9;  grid-row: 1 / 5; }
+    .p-item:nth-child(3) { grid-column: 9 / 13; grid-row: 1 / 5; }
+    .p-item:nth-child(4) { grid-column: 6 / 13; grid-row: 5 / 8; }
+    .p-item:nth-child(5) { grid-column: 1 / 5;  grid-row: 8 / 13; }
+    .p-item:nth-child(6) { grid-column: 5 / 9;  grid-row: 8 / 13; }
+    .p-item:nth-child(7) { grid-column: 9 / 13; grid-row: 8 / 13; }
+
+    .p-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.7s ease;
+    }
+    .p-item:hover .p-bg { transform: scale(1.05); }
+
+    /* Cinematic gradient placeholders — replace with real <img> tags */
+    .p-item:nth-child(1) .p-bg { background: linear-gradient(160deg,#0d1b2a 0%,#1b3a5c 50%,#0a0f18 100%); }
+    .p-item:nth-child(2) .p-bg { background: linear-gradient(140deg,#2a1500 0%,#6b3a00 60%,#3d1f00 100%); }
+    .p-item:nth-child(3) .p-bg { background: linear-gradient(130deg,#0a0a0a 0%,#1e1e1e 60%,#0f0a00 100%); }
+    .p-item:nth-child(4) .p-bg { background: linear-gradient(to right,#050d1a 0%,#1a2d40 40%,#0a1520 100%); }
+    .p-item:nth-child(5) .p-bg { background: linear-gradient(155deg,#1a0a00 0%,#3d1f00 55%,#0f0a00 100%); }
+    .p-item:nth-child(6) .p-bg { background: linear-gradient(135deg,#050505 0%,#141414 60%,#1a0f00 100%); }
+    .p-item:nth-child(7) .p-bg { background: linear-gradient(145deg,#0a1520 0%,#1b3040 60%,#050d18 100%); }
+
+    .p-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.45s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.2rem 1.4rem;
+    }
+    .p-item:hover .p-overlay { opacity: 1; }
+    .p-info h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 0.2rem;
+    }
+    .p-info span {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .p-placeholder-hint {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      text-align: center;
+      pointer-events: none;
+    }
+    .p-placeholder-hint .ph-icon {
+      display: block;
+      font-size: 1.6rem;
+      color: var(--muted);
+      opacity: 0.18;
+      margin-bottom: 0.4rem;
+    }
+    .p-placeholder-hint p {
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      opacity: 0.3;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7rem;
+      align-items: start;
+    }
+    .about-body p {
+      font-size: 1rem;
+      line-height: 2;
+      color: #a09890;
+      margin-bottom: 1.4rem;
+    }
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+    .tag {
+      padding: 0.4rem 1.1rem;
+      border: 1px solid var(--border);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .about-right {
+      padding-left: 3rem;
+      border-left: 1px solid var(--border);
+    }
+    .stat-block { margin-bottom: 3rem; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--gold-lt);
+      line-height: 1.6;
+      border-left: 2px solid var(--gold);
+      padding-left: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    /* ─── SOCIAL ─── */
+    #social { background: var(--black); }
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 3.5rem;
+    }
+    .social-card {
+      background: var(--black);
+      padding: 2.8rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      text-decoration: none;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .social-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--gold);
+      transition: width 0.45s ease;
+    }
+    .social-card:hover { background: var(--dark2); }
+    .social-card:hover::after { width: 100%; }
+    .sc-platform {
+      font-size: 0.6rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .sc-handle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 300;
+    }
+    .sc-desc {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .sc-arrow {
+      font-size: 0.68rem;
+      color: var(--muted);
+      transition: color 0.3s, transform 0.3s;
+      display: inline-block;
+    }
+    .social-card:hover .sc-arrow { color: var(--gold); transform: translateX(5px); }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 9rem 3rem;
+    }
+    .contact-pre {
+      font-size: 0.65rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .contact-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 8vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 2rem;
+    }
+    .contact-title em { font-style: italic; color: var(--gold); }
+    .contact-sub {
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 3rem;
+    }
+    .contact-email {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,169,110,0.4);
+      padding-bottom: 0.3rem;
+      transition: opacity 0.3s;
+    }
+    .contact-email:hover { opacity: 0.65; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      letter-spacing: 0.32em;
+      color: var(--white);
+    }
+    .footer-copy {
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes pulseLine {
+      0%,100% { opacity: 1; } 50% { opacity: 0.25; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.85s ease, transform 0.85s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1.3rem 1.5rem; }
+      nav.scrolled { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      section { padding: 5rem 1.5rem; }
+      .hero { padding: 0 1.5rem; }
+
+      .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        grid-auto-rows: auto;
+        gap: 8px;
+      }
+      .p-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4/5; }
+      .p-item:nth-child(4) { aspect-ratio: 16/9; grid-column: 1 / -1 !important; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-right { border-left: none; border-top: 1px solid var(--border); padding-left: 0; padding-top: 2.5rem; }
+
+      .social-grid { grid-template-columns: 1fr 1fr; }
+
+      footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+    }
+
+    @media (max-width: 520px) {
+      .nav-links { display: none; }
+      .social-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to Cine Drift Studios</h1>
-  <p>Coming soon...</p>
+
+  <!-- ── NAVIGATION ── -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">CINE<span>DRIFT</span></a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#social">Social</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <p class="hero-eyebrow">Drone &nbsp;·&nbsp; Mobile &nbsp;·&nbsp; Photography &nbsp;·&nbsp; Videography</p>
+    <h1 class="hero-title">Cine<em>drift</em><br>Studios</h1>
+    <p class="hero-sub">Capturing the world from every angle</p>
+    <div class="hero-cta">
+      <a href="#work" class="btn-outline">View Portfolio</a>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ── PORTFOLIO ── -->
+  <section id="work">
+    <div class="work-header reveal">
+      <div>
+        <p class="section-label">Portfolio</p>
+        <h2 class="section-title">Selected<br><em>Work</em></h2>
+      </div>
+      <p class="work-note">Replace each placeholder below with your own photos or videos by editing the index.html file.</p>
+    </div>
+
+    <div class="portfolio-grid reveal">
+
+      <!-- ITEM 1 — Replace .p-bg div with your image:
+           <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"> -->
+      <div class="p-item">
+        <div class="p-bg"></div>
+        <div class="p-placeholder-hint"><span class="ph-icon">+</span><p>Add photo / video</p></div>
+        <div class="p-overlay">
+          <div class="p-info"><h3>Aerial Perspective</h3><span>Drone Photography</span></div>
+        </div>
+      </div>
+
+      <div class="p-item">
+        <div class="p-bg"></div>
+        <div class="p-placeholder-hint"><span class="ph-icon">+</span><p>Add photo / video</p></div>
+        <div class="p-overlay">
+          <div class="p-info"><h3>Golden Hour</h3><span>Mobile Photography</span></div>
+        </div>
+      </div>
+
+      <div class="p-item">
+        <div class="p-bg"></div>
+        <div class="p-placeholder-hint"><span class="ph-icon">+</span><p>Add photo / video</p></div>
+        <div class="p-overlay">
+          <div class="p-info"><h3>Urban Drift</h3><span>Mobile Photography</span></div>
+        </div>
+      </div>
+
+      <div class="p-item">
+        <div class="p-bg"></div>
+        <div class="p-placeholder-hint"><span class="ph-icon">▶</span><p>Add video here</p></div>
+        <div class="p-overlay">
+          <div class="p-info"><h3>Cinematic Showreel</h3><span>Drone Videography</span></div>
+        </div>
+      </div>
+
+      <div class="p-item">
+        <div class="p-bg"></div>
+        <div class="p-placeholder-hint"><span class="ph-icon">+</span><p>Add photo / video</p></div>
+        <div class="p-overlay">
+          <div class="p-info"><h3>Terrain & Texture</h3><span>Drone Photography</span></div>
+        </div>
+      </div>
+
+      <div class="p-item">
+        <div class="p-bg"></div>
+        <div class="p-placeholder-hint"><span class="ph-icon">+</span><p>Add photo / video</p></div>
+        <div class="p-overlay">
+          <div class="p-info"><h3>Motion Study</h3><span>Mobile Videography</span></div>
+        </div>
+      </div>
+
+      <div class="p-item">
+        <div class="p-bg"></div>
+        <div class="p-placeholder-hint"><span class="ph-icon">+</span><p>Add photo / video</p></div>
+        <div class="p-overlay">
+          <div class="p-info"><h3>Skyline Series</h3><span>Drone Photography</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section id="about">
+    <div class="about-grid">
+      <div>
+        <p class="section-label reveal">About</p>
+        <h2 class="section-title reveal">The Eye<br><em>Behind the Lens</em></h2>
+        <!-- ✏️ Edit the paragraph text below to write your own bio -->
+        <div class="about-body reveal">
+          <p>Cinedrift Studios is a personal creative project built around a passion for seeing the world differently — from the sky and at street level.</p>
+          <p>Armed with a drone and a mobile camera, I explore landscapes, cities, and moments that reward a second look.</p>
+        </div>
+        <div class="about-tags reveal">
+          <span class="tag">Drone Photography</span>
+          <span class="tag">Mobile Photography</span>
+          <span class="tag">Aerial Cinematography</span>
+          <span class="tag">Videography</span>
+        </div>
+      </div>
+
+      <div class="about-right reveal">
+        <div class="stat-block">
+          <div class="stat-num">2</div>
+          <div class="stat-lbl">Perspectives — Sky & Ground</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">360°</div>
+          <div class="stat-lbl">Field of View</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">∞</div>
+          <div class="stat-lbl">Frames to Capture</div>
+        </div>
+        <blockquote class="about-quote">
+          "Drift between the familiar and the unseen."
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SOCIAL ── -->
+  <section id="social">
+    <div class="reveal">
+      <p class="section-label">Connect</p>
+      <h2 class="section-title">Find Me<br><em>Online</em></h2>
+    </div>
+
+    <div class="social-grid reveal">
+
+      <a class="social-card" href="https://www.instagram.com/cinedriftstudios/" target="_blank" rel="noopener">
+        <p class="sc-platform">Instagram</p>
+        <p class="sc-handle">@cinedriftstudios</p>
+        <p class="sc-desc">Photos, reels and behind-the-scenes from every shoot.</p>
+        <span class="sc-arrow">Follow →</span>
+      </a>
+
+      <!-- ✏️ Add your YouTube channel link below -->
+      <a class="social-card" href="#" target="_blank" rel="noopener">
+        <p class="sc-platform">YouTube</p>
+        <p class="sc-handle">Cinedrift Studios</p>
+        <p class="sc-desc">Cinematic drone and mobile video edits.</p>
+        <span class="sc-arrow">Watch →</span>
+      </a>
+
+      <!-- ✏️ Add your TikTok link below -->
+      <a class="social-card" href="#" target="_blank" rel="noopener">
+        <p class="sc-platform">TikTok</p>
+        <p class="sc-handle">@cinedriftstudios</p>
+        <p class="sc-desc">Short-form clips and quick aerial perspectives.</p>
+        <span class="sc-arrow">Follow →</span>
+      </a>
+
+      <!-- ✏️ Add any fourth platform — LinkedIn, X/Twitter, etc. -->
+      <a class="social-card" href="#" target="_blank" rel="noopener">
+        <p class="sc-platform">LinkedIn</p>
+        <p class="sc-handle">Cinedrift Studios</p>
+        <p class="sc-desc">Professional work and collaboration enquiries.</p>
+        <span class="sc-arrow">Connect →</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact">
+    <p class="contact-pre reveal">Get in Touch</p>
+    <h2 class="contact-title reveal">Let's Create<br><em>Something</em></h2>
+    <p class="contact-sub reveal">Collaborations, commissions, or just to say hello.</p>
+    <!-- ✏️ Replace with your actual email address -->
+    <a href="mailto:hello@cinedriftstudios.com" class="contact-email reveal">hello@cinedriftstudios.com</a>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span class="footer-logo">CINEDRIFT STUDIOS</span>
+    <span class="footer-copy">© 2025 Cinedrift Studios. All rights reserved.</span>
+  </footer>
+
+  <script>
+    // Navbar — turns solid on scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Scroll-reveal for sections
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => revealObserver.observe(el));
+  </script>
 </body>
 </html>
