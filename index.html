@@ -3,17 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cine Drift Studios — Drone & Mobile Photography Portfolio</title>
-  <meta name="description" content="Cine Drift Studios — Personal drone and mobile photography and videography portfolio. Professional aerial cinematography and mobile photography.">
-  <meta property="og:title" content="Cine Drift Studios">
-  <meta property="og:description" content="Drone and mobile photography portfolio">
-  <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%236dbac8'>📹</text></svg>">
+  <title>Cine Drift Studios | Capture. Create. Drift.</title>
+  <meta name="description" content="Cine Drift Studios — Drone and mobile photography and videography. Capture. Create. Drift.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-  <!-- Lightbox CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -91,7 +85,7 @@
     }
     #loader.hidden { opacity: 0; visibility: hidden; }
     .loader-logo {
-      font-size: 3rem;
+      width: 160px;
       opacity: 0;
       transform: translateY(20px);
       animation: loaderIn 1s ease 0.3s forwards;
@@ -123,30 +117,6 @@
     }
     @keyframes loadBar { to { width: 100%; } }
 
-    /* ── MOBILE MENU TOGGLE ── */
-    .menu-toggle {
-      display: none;
-      position: fixed;
-      top: 1.6rem;
-      right: 3.5rem;
-      z-index: 600;
-      background: none;
-      border: none;
-      cursor: pointer;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    .menu-toggle span {
-      width: 24px;
-      height: 2px;
-      background: var(--teal);
-      transition: all 0.3s ease;
-      display: block;
-    }
-    .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(8px, 8px); }
-    .menu-toggle.active span:nth-child(2) { opacity: 0; }
-    .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(8px, -8px); }
-
     /* ── NAVBAR ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
@@ -163,15 +133,14 @@
       padding: 1rem 3.5rem;
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      font-weight: 400;
-      letter-spacing: 0.35em;
-      color: var(--white);
-      text-decoration: none;
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+      display: block;
+      filter: brightness(1);
+      transition: filter 0.3s;
     }
-    .nav-logo span { color: var(--teal); }
+    .nav-logo img:hover { filter: brightness(1.2); }
     .nav-links {
       display: flex;
       align-items: center;
@@ -295,7 +264,6 @@
       font-weight: 500;
       transition: background 0.3s, transform 0.2s;
       cursor: none;
-      border: none;
     }
     .btn-primary:hover { background: var(--teal2); transform: translateY(-1px); }
     .btn-ghost {
@@ -311,7 +279,6 @@
       text-transform: uppercase;
       transition: border-color 0.3s, background 0.3s;
       cursor: none;
-      background: transparent;
     }
     .btn-ghost:hover { border-color: var(--teal); background: rgba(109,186,200,0.05); }
 
@@ -334,6 +301,42 @@
       width: 1px; height: 60px;
       background: linear-gradient(to bottom, var(--teal), transparent);
       animation: pulseLine 2.5s ease-in-out infinite;
+    }
+
+    /* Marquee strip */
+    .marquee-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      overflow: hidden;
+      background: var(--dark);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 22s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 0 2.5rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .marquee-dot {
+      width: 4px; height: 4px;
+      background: var(--teal);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     /* ── SECTIONS ── */
@@ -360,33 +363,12 @@
     }
     .sec-title em { font-style: italic; color: var(--teal); }
 
-    /* ── PORTFOLIO FILTERS ── */
-    .portfolio-filters {
-      display: flex;
-      gap: 1rem;
-      margin: 2rem 0 3rem 0;
-      flex-wrap: wrap;
-    }
-    .filter-btn {
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--teal);
-      background: transparent;
-      color: var(--teal);
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .filter-btn.active { background: var(--teal); color: var(--black); }
-    .filter-btn:hover { background: var(--teal); color: var(--black); }
-
     /* ── PORTFOLIO ── */
     #work { background: var(--black); }
 
     .work-head {
       display: flex; justify-content: space-between; align-items: flex-end;
-      margin-bottom: 2rem;
+      margin-bottom: 3.5rem;
     }
     .work-hint {
       font-size: 0.68rem;
@@ -403,7 +385,6 @@
       gap: 8px;
     }
     .pi { grid-column: auto; grid-row: auto; position: relative; overflow: hidden; background: var(--dark2); cursor: none; }
-    .pi.hidden { display: none; }
     .pi:nth-child(1) { grid-column:1/6;  grid-row:1/9;  }
     .pi:nth-child(2) { grid-column:6/9;  grid-row:1/5;  }
     .pi:nth-child(3) { grid-column:9/13; grid-row:1/5;  }
@@ -415,8 +396,6 @@
     .pi-bg {
       position: absolute; inset: 0;
       transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
-      background-size: cover;
-      background-position: center;
     }
     .pi:hover .pi-bg { transform: scale(1.06); }
 
@@ -564,65 +543,6 @@
     }
     .ct-title em { font-style: italic; color: var(--teal); }
     .ct-sub { font-size: 0.8rem; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 3.5rem; }
-
-    /* Contact Form Styles */
-    .contact-form {
-      max-width: 500px;
-      margin: 0 auto;
-      text-align: left;
-    }
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-    .form-group label {
-      display: block;
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 0.5rem;
-    }
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.85rem;
-      background: var(--dark2);
-      border: 1px solid var(--border);
-      color: var(--white);
-      font-family: 'Jost', sans-serif;
-      font-size: 0.9rem;
-      transition: border-color 0.3s;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--teal);
-    }
-    .form-group textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
-    .form-submit {
-      background: var(--teal);
-      color: var(--black);
-      padding: 0.85rem 2.2rem;
-      border: none;
-      font-size: 0.68rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: opacity 0.3s;
-    }
-    .form-submit:hover { opacity: 0.8; }
-    .form-message {
-      margin-top: 1rem;
-      font-size: 0.8rem;
-      text-align: center;
-      display: none;
-    }
-    .form-message.success { color: var(--teal); display: block; }
-    .form-message.error { color: #ff6b6b; display: block; }
-
     .ct-email {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.5rem; color: var(--teal);
@@ -641,15 +561,8 @@
       padding: 2rem 3.5rem;
       display: flex; justify-content: space-between; align-items: center;
     }
-    .ft-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      letter-spacing: 0.32em;
-      color: var(--white);
-      opacity: 0.7;
-      transition: opacity 0.3s;
-    }
-    .ft-logo:hover { opacity: 1; }
+    .ft-logo img { height: 28px; width: auto; opacity: 0.7; transition: opacity 0.3s; }
+    .ft-logo img:hover { opacity: 1; }
     .ft-copy { font-size: 0.6rem; letter-spacing: 0.12em; color: var(--muted); }
     .ft-tagline { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal); opacity: 0.7; }
 
@@ -677,7 +590,6 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
       nav, nav.scrolled { padding-left: 1.8rem; padding-right: 1.8rem; }
-      .menu-toggle { display: flex; }
       section { padding: 5rem 1.8rem; }
       .hero { padding: 0 1.8rem; }
       .pgrid {
@@ -694,27 +606,11 @@
       footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
     @media (max-width: 540px) {
-      .nav-links { 
-        display: none;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        background: rgba(8,8,8,0.95);
-        padding: 2rem;
-        gap: 1rem;
-        border-bottom: 1px solid var(--border);
-        z-index: 499;
-      }
-      .nav-links.active { display: flex; }
+      .nav-links { display: none; }
       .social-grid { grid-template-columns: 1fr; }
       .hero-actions { flex-direction: column; align-items: flex-start; }
       body { cursor: auto; }
       .cursor-dot, .cursor-ring { display: none; }
-      .portfolio-filters { gap: 0.5rem; }
-      .filter-btn { padding: 0.4rem 0.8rem; font-size: 0.55rem; }
-      .menu-toggle { right: 1.8rem; }
     }
   </style>
 </head>
@@ -726,22 +622,17 @@
 
   <!-- ── LOADER ── -->
   <div id="loader">
-    <p class="loader-logo">📹</p>
+    <img class="loader-logo" src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=" alt="Logo">
     <p class="loader-tagline">Capture &nbsp;·&nbsp; Create &nbsp;·&nbsp; Drift</p>
     <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
   </div>
 
-  <!-- ── MOBILE MENU TOGGLE ── -->
-  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-
   <!-- ── NAVIGATION ── -->
   <nav id="navbar">
-    <a href="#" class="nav-logo">CINE<span>DRIFT</span></a>
-    <ul class="nav-links" id="navLinks">
+    <a href="#" class="nav-logo">
+      <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTL" alt="Logo">
+    </a>
+    <ul class="nav-links">
       <li><a href="#work">Work</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#social">Social</a></li>
@@ -770,6 +661,28 @@
     </div>
   </section>
 
+  <!-- ── MARQUEE ── -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <!-- duplicated for seamless loop -->
+      <span class="marquee-item">Drone Photography<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Mobile Photography<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Aerial Cinematography<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Videography<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Capture. Create. Drift.<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Drone Photography<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Mobile Photography<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Aerial Cinematography<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Videography<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Capture. Create. Drift.<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Drone Photography<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Mobile Photography<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Aerial Cinematography<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Videography<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Capture. Create. Drift.<span class="marquee-dot"></span></span>
+    </div>
+  </div>
+
   <!-- ── PORTFOLIO ── -->
   <section id="work">
     <div class="work-head reveal">
@@ -777,67 +690,58 @@
         <p class="sec-label">Portfolio</p>
         <h2 class="sec-title">Selected<br><em>Work</em></h2>
       </div>
-      <p class="work-hint">Click any item to expand. Filter by category or replace placeholders with your images.</p>
-    </div>
-
-    <!-- Portfolio Filters -->
-    <div class="portfolio-filters reveal">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="drone">Drone</button>
-      <button class="filter-btn" data-filter="mobile">Mobile</button>
-      <button class="filter-btn" data-filter="video">Video</button>
+      <p class="work-hint">Replace each slot with your own images — instructions in the HTML comments.</p>
     </div>
 
     <div class="pgrid reveal reveal-delay-1">
 
-      <!-- ITEM 1 — Drone Photography -->
-      <a class="pi" href="https://via.placeholder.com/800x600?text=Aerial+Perspective" data-lightbox="portfolio" data-title="Aerial Perspective — Drone Photography" data-category="drone">
+      <!-- ✏️ HOW TO ADD YOUR PHOTO:
+           Replace the <div class="pi-bg"></div> with:
+           <img src="your-image.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+           Also update the title and category in .pi-info below.
+      -->
+
+      <div class="pi">
         <div class="pi-bg"></div>
-        <div class="pi-hint"><span class="ph">+</span><p>Add photo</p></div>
+        <div class="pi-hint"><span class="ph">+</span><p>Add photo or video</p></div>
         <div class="pi-overlay"><div class="pi-info"><h3>Aerial Perspective</h3><span>Drone Photography</span></div></div>
-      </a>
+      </div>
 
-      <!-- ITEM 2 — Mobile Photography -->
-      <a class="pi" href="https://via.placeholder.com/600x800?text=Golden+Hour" data-lightbox="portfolio" data-title="Golden Hour — Mobile Photography" data-category="mobile">
+      <div class="pi">
         <div class="pi-bg"></div>
-        <div class="pi-hint"><span class="ph">+</span><p>Add photo</p></div>
+        <div class="pi-hint"><span class="ph">+</span><p>Add photo or video</p></div>
         <div class="pi-overlay"><div class="pi-info"><h3>Golden Hour</h3><span>Mobile Photography</span></div></div>
-      </a>
+      </div>
 
-      <!-- ITEM 3 — Mobile Photography -->
-      <a class="pi" href="https://via.placeholder.com/600x800?text=Urban+Drift" data-lightbox="portfolio" data-title="Urban Drift — Mobile Photography" data-category="mobile">
+      <div class="pi">
         <div class="pi-bg"></div>
-        <div class="pi-hint"><span class="ph">+</span><p>Add photo</p></div>
+        <div class="pi-hint"><span class="ph">+</span><p>Add photo or video</p></div>
         <div class="pi-overlay"><div class="pi-info"><h3>Urban Drift</h3><span>Mobile Photography</span></div></div>
-      </a>
+      </div>
 
-      <!-- ITEM 4 — Drone Videography -->
-      <a class="pi" href="https://www.youtube.com/embed/dQw4w9WgXcQ" data-lightbox="portfolio" data-title="Cinematic Reel — Drone Videography" data-category="video">
+      <div class="pi">
         <div class="pi-bg"></div>
-        <div class="pi-hint"><span class="ph">▶</span><p>Add video</p></div>
+        <div class="pi-hint"><span class="ph">▶</span><p>Add video here</p></div>
         <div class="pi-overlay"><div class="pi-info"><h3>Cinematic Reel</h3><span>Drone Videography</span></div></div>
-      </a>
+      </div>
 
-      <!-- ITEM 5 — Drone Photography -->
-      <a class="pi" href="https://via.placeholder.com/600x800?text=Terrain+Study" data-lightbox="portfolio" data-title="Terrain Study — Drone Photography" data-category="drone">
+      <div class="pi">
         <div class="pi-bg"></div>
-        <div class="pi-hint"><span class="ph">+</span><p>Add photo</p></div>
+        <div class="pi-hint"><span class="ph">+</span><p>Add photo or video</p></div>
         <div class="pi-overlay"><div class="pi-info"><h3>Terrain Study</h3><span>Drone Photography</span></div></div>
-      </a>
+      </div>
 
-      <!-- ITEM 6 — Mobile Videography -->
-      <a class="pi" href="https://via.placeholder.com/800x600?text=Motion+%26+Light" data-lightbox="portfolio" data-title="Motion & Light — Mobile Videography" data-category="video">
+      <div class="pi">
         <div class="pi-bg"></div>
-        <div class="pi-hint"><span class="ph">+</span><p>Add video</p></div>
+        <div class="pi-hint"><span class="ph">+</span><p>Add photo or video</p></div>
         <div class="pi-overlay"><div class="pi-info"><h3>Motion & Light</h3><span>Mobile Videography</span></div></div>
-      </a>
+      </div>
 
-      <!-- ITEM 7 — Drone Photography -->
-      <a class="pi" href="https://via.placeholder.com/800x600?text=Skyline+Series" data-lightbox="portfolio" data-title="Skyline Series — Drone Photography" data-category="drone">
+      <div class="pi">
         <div class="pi-bg"></div>
-        <div class="pi-hint"><span class="ph">+</span><p>Add photo</p></div>
+        <div class="pi-hint"><span class="ph">+</span><p>Add photo or video</p></div>
         <div class="pi-overlay"><div class="pi-info"><h3>Skyline Series</h3><span>Drone Photography</span></div></div>
-      </a>
+      </div>
 
     </div>
   </section>
@@ -848,6 +752,7 @@
       <div>
         <p class="sec-label reveal">About</p>
         <h2 class="sec-title reveal reveal-delay-1">The Eye<br><em>Behind the Lens</em></h2>
+        <!-- ✏️ Edit the bio text below -->
         <div class="about-text reveal reveal-delay-2">
           <p>Cine Drift Studios is a personal creative project built around a passion for seeing the world differently — from above and at street level.</p>
           <p>Armed with a drone and a mobile camera, every frame is a chance to capture something that rewards a second look.</p>
@@ -861,7 +766,7 @@
       </div>
       <div class="about-right reveal reveal-delay-2">
         <div class="stat-row">
-          <span class="stat-n">2</span>
+          <span class="stat-n" data-count="2">2</span>
           <span class="stat-l">Perspectives — Sky & Ground</span>
         </div>
         <div class="stat-row">
@@ -884,6 +789,7 @@
 
     <div class="social-grid reveal reveal-delay-2">
 
+      <!-- ✅ Instagram is already linked -->
       <a class="sc" href="https://www.instagram.com/cinedriftstudios/" target="_blank" rel="noopener">
         <p class="sc-plat">Instagram</p>
         <p class="sc-handle">@cinedriftstudios</p>
@@ -891,21 +797,24 @@
         <span class="sc-arrow">Follow →</span>
       </a>
 
-      <a class="sc" href="https://www.youtube.com/@cinedriftstudios" target="_blank" rel="noopener">
+      <!-- ✏️ Add your YouTube link below -->
+      <a class="sc" href="#" target="_blank" rel="noopener">
         <p class="sc-plat">YouTube</p>
         <p class="sc-handle">Cine Drift Studios</p>
         <p class="sc-desc">Cinematic drone and mobile video edits.</p>
         <span class="sc-arrow">Watch →</span>
       </a>
 
-      <a class="sc" href="https://www.tiktok.com/@cinedriftstudios" target="_blank" rel="noopener">
+      <!-- ✏️ Add your TikTok link below -->
+      <a class="sc" href="#" target="_blank" rel="noopener">
         <p class="sc-plat">TikTok</p>
         <p class="sc-handle">@cinedriftstudios</p>
         <p class="sc-desc">Short-form aerial clips and quick cuts.</p>
         <span class="sc-arrow">Follow →</span>
       </a>
 
-      <a class="sc" href="https://www.linkedin.com/company/cinedriftstudios/" target="_blank" rel="noopener">
+      <!-- ✏️ Add any fourth platform — LinkedIn, X/Twitter, etc. -->
+      <a class="sc" href="#" target="_blank" rel="noopener">
         <p class="sc-plat">LinkedIn</p>
         <p class="sc-handle">Cine Drift Studios</p>
         <p class="sc-desc">Professional work and collaboration enquiries.</p>
@@ -920,44 +829,21 @@
     <p class="ct-pre reveal">Get in Touch</p>
     <h2 class="ct-title reveal reveal-delay-1">Let's Create<br><em>Something</em></h2>
     <p class="ct-sub reveal reveal-delay-2">Collaborations, commissions, or just to say hello.</p>
-    
-    <form class="contact-form reveal reveal-delay-3" id="contactForm">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      <div class="form-group">
-        <label for="subject">Subject</label>
-        <input type="text" id="subject" name="subject" required>
-      </div>
-      <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" required></textarea>
-      </div>
-      <button type="submit" class="form-submit">Send Message</button>
-      <div class="form-message" id="formMessage"></div>
-    </form>
+    <!-- ✏️ Replace with your actual email -->
+    <a href="mailto:hello@cinedriftstudios.com" class="ct-email reveal reveal-delay-3">hello@cinedriftstudios.com</a>
   </section>
 
   <!-- ── FOOTER ── -->
   <footer>
-    <a href="#" class="ft-logo">CINEDRIFT STUDIOS</a>
+    <a href="#" class="ft-logo">
+      <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTL" alt="Logo">
+    </a>
     <span class="ft-tagline">Capture · Create · Drift</span>
-    <span class="ft-copy">© <span id="year"></span> Cine Drift Studios</span>
+    <span class="ft-copy">© 2025 Cine Drift Studios</span>
   </footer>
 
-  <!-- Lightbox JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/lightbox.min.js"></script>
-
   <script>
-    // Update copyright year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // ─── CUSTOM CURSOR ───
+    // ── Custom cursor
     const dot  = document.getElementById('cursorDot');
     const ring = document.getElementById('cursorRing');
     let mx = 0, my = 0, rx = 0, ry = 0;
@@ -982,57 +868,20 @@
       el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
     });
 
-    // ─── LOADER ───
+    // ── Loader
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('loader').classList.add('hidden');
       }, 2700);
     });
 
-    // ─── MOBILE MENU TOGGLE ───
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
-    menuToggle.addEventListener('click', () => {
-      menuToggle.classList.toggle('active');
-      navLinks.classList.toggle('active');
-    });
-    // Close menu when link is clicked
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        menuToggle.classList.remove('active');
-        navLinks.classList.remove('active');
-      });
-    });
-
-    // ─── NAVBAR SCROLL EFFECT ───
+    // ── Navbar scroll
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 60);
     });
 
-    // ─── PORTFOLIO FILTERING ───
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const portfolioItems = document.querySelectorAll('.pi');
-
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        // Update active button
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        // Filter items
-        const category = btn.dataset.filter;
-        portfolioItems.forEach(item => {
-          if (category === 'all' || item.dataset.category === category) {
-            item.classList.remove('hidden');
-          } else {
-            item.classList.add('hidden');
-          }
-        });
-      });
-    });
-
-    // ─── SCROLL REVEAL ───
+    // ── Scroll reveal
     const revEls = document.querySelectorAll('.reveal');
     const revObs = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
@@ -1044,7 +893,7 @@
     }, { threshold: 0.1 });
     revEls.forEach(el => revObs.observe(el));
 
-    // ─── PORTFOLIO ITEMS STAGGER ───
+    // ── Portfolio items stagger
     document.querySelectorAll('.pi').forEach((el, i) => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(24px)';
@@ -1057,50 +906,6 @@
         }
       }, { threshold: 0.1 });
       obs.observe(el);
-    });
-
-    // ─── CONTACT FORM HANDLING ───
-    const contactForm = document.getElementById('contactForm');
-    const formMessage = document.getElementById('formMessage');
-
-    contactForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const subject = document.getElementById('subject').value;
-      const message = document.getElementById('message').value;
-
-      // Using Formspree for free form handling (no backend needed)
-      try {
-        const response = await fetch('https://formspree.io/f/xqkkojqj', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: name,
-            email: email,
-            subject: subject,
-            message: message
-          })
-        });
-
-        if (response.ok) {
-          formMessage.textContent = '✓ Message sent successfully! I\'ll get back to you soon.';
-          formMessage.classList.add('success');
-          formMessage.classList.remove('error');
-          contactForm.reset();
-          setTimeout(() => {
-            formMessage.classList.remove('success');
-            formMessage.textContent = '';
-          }, 5000);
-        } else {
-          throw new Error('Form submission failed');
-        }
-      } catch (error) {
-        formMessage.textContent = '✗ Error sending message. Please try again or email directly.';
-        formMessage.classList.add('error');
-        formMessage.classList.remove('success');
-      }
     });
   </script>
 </body>
