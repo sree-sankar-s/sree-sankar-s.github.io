@@ -1022,6 +1022,96 @@
       }, { threshold: 0.1 });
       obs.observe(el);
     });
+    // ── Live Instagram Integration via Behold
+const BEHOLD_API_URL = 'https://behold.so/api/v1/src/YOUR_FEED_ID'; // Replace with your actual Behold URL
+
+async function loadInstagramFeed() {
+  const gridContainer = document.querySelector('.pgrid') || document.getElementById('work'); 
+  if (!gridContainer) return;
+
+  try {
+    const response = await fetch(BEHOLD_API_URL);
+    if (!response.ok) throw new Error('Network response was not ok');
+    const mediaItems = await response.json();
+
+    // Clear existing hardcoded placeholders
+    gridContainer.innerHTML = '';
+
+    mediaItems.forEach((item, i) => {
+      // Create the structural portfolio item wrapper (.pi)
+      const piElement = document.createElement('div');
+      piElement.className = 'pi reveal interactive';
+      
+      // Determine if media is video or image/carousel
+      let mediaMarkup = '';
+      if (item.media_type === 'VIDEO') {
+        mediaMarkup = `
+          <video class="thumbnail-video" muted loop playsinline loading="lazy" poster="${item.thumbnail_url}">
+            <source src="${item.media_url}" type="video/mp4">
+          </video>`;
+      } else {
+        mediaMarkup = `<img src="${item.media_url}" alt="${item.caption || 'Cine Drift Studios Post'}" loading="lazy" />`;
+      }
+
+      // Build the inner overlay using your design styles
+      piElement.innerHTML = `
+        <a href="${item.permalink}" target="_blank" rel="noopener noreferrer">
+          <div class="media-container">
+            ${mediaMarkup}
+          </div>
+          <div class="grid-overlay">
+            <p class="caption-text">${item.caption ? item.caption.substring(0, 60) + '...' : 'View on Instagram'}</p>
+          </div>
+        </a>
+      `;
+
+      // Maintain your stagger animation properties
+      piElement.style.opacity = '0';
+      piElement.style.transform = 'translateY(24px)';
+      piElement.style.transition = `opacity 0.7s ease ${i * 0.07}s, transform 0.7s ease ${i * 0.07}s`;
+
+      gridContainer.appendChild(piElement);
+    });
+
+    // Re-initialize your event listeners for the custom cursor and scroll observer
+    reinitializeInteractionEngines();
+
+  } catch (error) {
+    console.error('Error loading Instagram feed:', error);
+    // Fallback: keeping standard layout or showing a clean error state
+  }
+}
+
+function reinitializeInteractionEngines() {
+  // Trigger your scroll reveal observer for the newly injected elements
+  const revEls = document.querySelectorAll('.reveal');
+  if (typeof revObs !== 'undefined') {
+    revEls.forEach(el => revObs.observe(el));
+  }
+
+  // Bind custom cursor events to the new interactive nodes
+  const ring = document.getElementById('cursorRing');
+  const interactives = document.querySelectorAll('.interactive');
+  if (ring && interactives.length > 0) {
+    interactives.forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
+    });
+  }
+
+  // Trigger video hover play/pause if applicable
+  document.querySelectorAll('.pi').forEach(item => {
+    const video = item.querySelector('.thumbnail-video');
+    if (video) {
+      item.addEventListener('mouseenter', () => video.play().catch(() => {}));
+      item.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+    }
+  });
+}
+
+// Run the engine on content load
+document.addEventListener('DOMContentLoaded', loadInstagramFeed);
   </script>
+  
 </body>
 </html>
