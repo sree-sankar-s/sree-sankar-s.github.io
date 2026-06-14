@@ -678,7 +678,7 @@
     #social { background: var(--black); }
     .social-grid {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
+      grid-template-columns: repeat(4,1fr);
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
@@ -1040,6 +1040,34 @@
       .stats-inner{grid-template-columns:1fr;}
       .reel-close{top:0;right:0;background:rgba(8,8,8,.6);}
     }
+
+    /* ============ YOUTUBE SHOWCASE (live) ============ */
+    #youtube{padding:7rem 0;background:var(--black);border-top:1px solid var(--border);}
+    .yt-inner{max-width:1200px;margin:0 auto;padding:0 3.5rem;}
+    .yt-head{margin-bottom:2.8rem;}
+    .yt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+    .yt-card{position:relative;border:1px solid var(--border);border-radius:5px;overflow:hidden;
+      background:var(--dark2);cursor:none;aspect-ratio:16/9;
+      transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s,box-shadow .4s;}
+    .yt-card:hover{transform:translateY(-5px);border-color:rgba(109,186,200,.4);box-shadow:0 22px 46px rgba(0,0,0,.5);}
+    .yt-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+      filter:saturate(.9) brightness(.85);transition:transform .7s ease,filter .4s ease;}
+    .yt-card:hover img{transform:scale(1.05);filter:saturate(1.05) brightness(1);}
+    .yt-card iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3;}
+    .yt-overlay{position:absolute;inset:0;z-index:2;pointer-events:none;display:flex;flex-direction:column;
+      justify-content:flex-end;padding:1.1rem;background:linear-gradient(180deg,transparent 45%,rgba(8,8,8,.9));}
+    .yt-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--white);line-height:1.25;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+    .yt-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.85);z-index:2;pointer-events:none;
+      width:52px;height:52px;border:1.5px solid rgba(240,236,232,.7);border-radius:50%;display:flex;align-items:center;
+      justify-content:center;color:var(--white);font-size:.95rem;padding-left:4px;opacity:.85;transition:all .3s ease;}
+    .yt-card:hover .yt-play{opacity:1;transform:translate(-50%,-50%) scale(1);border-color:var(--teal);color:var(--teal);}
+    .yt-cta{margin-top:2.5rem;}
+    .yt-fallback{grid-column:1/-1;padding:2.5rem;border:1px dashed var(--border);border-radius:6px;text-align:center;
+      color:#9a9490;font-size:.85rem;line-height:1.8;}
+    .yt-fallback code{color:var(--teal);font-family:'Courier New',monospace;font-size:.78rem;}
+    @media (max-width:900px){.yt-grid{grid-template-columns:1fr 1fr;}.yt-inner{padding:0 1.8rem;}}
+    @media (max-width:560px){.yt-grid{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
@@ -1334,19 +1362,27 @@
       </a>
 
       <!-- ✏️ Add your YouTube link below -->
-      <a class="sc" href="https://www.youtube.com/@CineDriftStudios" target="_blank" rel="noopener">
+      <a class="sc" href="#" target="_blank" rel="noopener">
         <p class="sc-plat">YouTube</p>
-        <p class="sc-handle">@CineDriftStudios</p>
+        <p class="sc-handle">Cine Drift Studios</p>
         <p class="sc-desc">Cinematic drone and mobile video edits.</p>
         <span class="sc-arrow">Watch →</span>
       </a>
 
       <!-- ✏️ Add your TikTok link below -->
-      <a class="sc" href="https://www.tiktok.com/@cinedriftstudios" target="_blank" rel="noopener">
+      <a class="sc" href="#" target="_blank" rel="noopener">
         <p class="sc-plat">TikTok</p>
         <p class="sc-handle">@cinedriftstudios</p>
         <p class="sc-desc">Short-form aerial clips and quick cuts.</p>
         <span class="sc-arrow">Follow →</span>
+      </a>
+
+      <!-- ✏️ Add any fourth platform — LinkedIn, X/Twitter, etc. -->
+      <a class="sc" href="#" target="_blank" rel="noopener">
+        <p class="sc-plat">LinkedIn</p>
+        <p class="sc-handle">Cine Drift Studios</p>
+        <p class="sc-desc">Professional work and collaboration enquiries.</p>
+        <span class="sc-arrow">Connect →</span>
       </a>
 
     </div>
@@ -1365,6 +1401,21 @@
       </div>
       <div class="ig-cta reveal reveal-delay-2">
         <a href="https://instagram.com/cinedriftstudios" target="_blank" rel="noopener" class="btn-ghost">Follow @cinedriftstudios</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── YOUTUBE SHOWCASE (live) ── -->
+  <section id="youtube">
+    <div class="yt-inner">
+      <div class="yt-head reveal">
+        <span class="chapter-tag">The Films</span>
+        <p class="sec-label">From the Channel</p>
+        <h2 class="sec-title">Watch on<br><em>YouTube</em></h2>
+      </div>
+      <div class="yt-grid" id="ytGrid" aria-live="polite"></div>
+      <div class="yt-cta reveal reveal-delay-2">
+        <a href="https://www.youtube.com/@cinedriftstudios" target="_blank" rel="noopener" class="btn-ghost">Visit the channel</a>
       </div>
     </div>
   </section>
@@ -1653,7 +1704,7 @@
       function open(){
         lastFocus=document.activeElement;
         if(REEL_YOUTUBE_ID){
-          frame.innerHTML='<iframe title="Cine Drift Studios Showreel" src="https://www.youtube.com/embed/'+REEL_YOUTUBE_ID+'?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+          frame.innerHTML='<iframe title="Cine Drift Studios Showreel" src="https://www.youtube.com/embed/'+REEL_YOUTUBE_ID+'?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
         }else{
           frame.innerHTML='<div class="reel-empty"><span>// REEL SLOT</span>Drop your showreel here &mdash; add a YouTube ID in the code (REEL_YOUTUBE_ID) or swap in a &lt;video&gt; file.</div>';
         }
@@ -1750,6 +1801,71 @@
         if(idx===seq.length){idx=0;open();}
       });
       if(input)input.addEventListener('keydown',e=>{if(e.key==='Enter'){exec(input.value);input.value='';}});
+    })();
+
+    // ── YouTube showcase (live via Data API v3)
+    (function(){
+      // SETUP:
+      // 1) Google Cloud Console -> enable "YouTube Data API v3" -> create an API key.
+      // 2) Restrict the key: Application restrictions -> "HTTP referrers" -> add:
+      //       https://cinedriftstudios.com/*   and   https://sree-sankar-s.github.io/*
+      // 3) Paste the key below. The handle is already set.
+      const YT_API_KEY = "AIzaSyCZd7Jyr2eeOUmyeolQR8NYjn0bv_OmMPg";                         // <-- paste your restricted key
+      const YT_CHANNEL_HANDLE = "@CineDriftStudios";  // your @handle (no @)
+      const YT_CHANNEL_ID = "";                      // optional: a UC... id (skips handle lookup)
+      const YT_MAX = 6;
+
+      const grid=document.getElementById('ytGrid'); if(!grid)return;
+      const channelUrl='https://www.youtube.com/@'+YT_CHANNEL_HANDLE;
+      const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      const fallback=msg=>{grid.innerHTML='<div class="yt-fallback">'+msg+'</div>';};
+
+      function render(items){
+        if(!items||!items.length){fallback('No videos found yet.');return;}
+        grid.innerHTML=items.map(it=>{
+          const s=it.snippet||{}, vid=(s.resourceId&&s.resourceId.videoId)||'';
+          const t=(s.thumbnails&&(s.thumbnails.high||s.thumbnails.medium||s.thumbnails.default)||{}).url||'';
+          return '<div class="yt-card" data-vid="'+vid+'" role="button" tabindex="0" aria-label="Play '+esc(s.title)+'">'
+            +'<img loading="lazy" src="'+t+'" alt="'+esc(s.title)+'">'
+            +'<div class="yt-play">&#9654;</div>'
+            +'<div class="yt-overlay"><div class="yt-title">'+esc(s.title)+'</div></div></div>';
+        }).join('');
+        grid.querySelectorAll('.yt-card').forEach(card=>{
+          const play=()=>{const v=card.dataset.vid;if(!v)return;
+            card.innerHTML='<iframe src="https://www.youtube.com/embed/'+v+'?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1" title="YouTube video" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';};
+          card.addEventListener('click',play);
+          card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();play();}});
+        });
+      }
+
+      async function uploadsPlaylist(){
+        if(YT_CHANNEL_ID && YT_CHANNEL_ID.indexOf('UC')===0) return 'UU'+YT_CHANNEL_ID.slice(2);
+        const u='https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle='+encodeURIComponent(YT_CHANNEL_HANDLE)+'&key='+YT_API_KEY;
+        const r=await fetch(u), d=await r.json();
+        if(!r.ok) throw new Error((d.error&&d.error.message)||'channel lookup failed');
+        const it=d.items&&d.items[0];
+        if(!it) throw new Error('channel not found');
+        return it.contentDetails.relatedPlaylists.uploads;
+      }
+
+      async function load(){
+        if(!YT_API_KEY){
+          fallback('To show your channel live here, add a YouTube Data API key in the code (<code>YT_API_KEY</code>). For now, <a href="'+channelUrl+'" target="_blank" rel="noopener" style="color:var(--teal)">visit the channel &rarr;</a>');
+          return;
+        }
+        try{
+          const pl=await uploadsPlaylist();
+          const u='https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults='+YT_MAX+'&playlistId='+pl+'&key='+YT_API_KEY;
+          const r=await fetch(u), d=await r.json();
+          if(!r.ok) throw new Error((d.error&&d.error.message)||'fetch failed');
+          render(d.items);
+        }catch(err){
+          fallback('Couldn\'t load videos ('+esc(err.message)+'). Check the API key &amp; referrer restriction, or <a href="'+channelUrl+'" target="_blank" rel="noopener" style="color:var(--teal)">open the channel &rarr;</a>');
+        }
+      }
+      // Lazy-load when the section nears the viewport (saves API quota)
+      const io=new IntersectionObserver((es,o)=>{es.forEach(e=>{if(e.isIntersecting){load();o.disconnect();}});},{rootMargin:'200px'});
+      io.observe(grid);
     })();
   </script>
 
