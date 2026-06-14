@@ -795,6 +795,15 @@
   background: var(--teal);
   color: var(--dark); /* Swaps the text to dark when hovered */
 }
+    #form-status {
+  margin-top: 15px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
 
     /* ── FOOTER ── */
     footer {
@@ -1479,22 +1488,24 @@
   <h2 class="ct-title">Let's <em>Create</em><br>Something</h2>
   <div class="ct-sub">Collaborations, commissions, or just to say hello.</div>
   
-  <form action="https://formspree.io/f/xrevrgwg" method="POST" class="contact-form">
-    
-    <div class="input-group">
-      <input type="text" name="name" placeholder="Your Name" class="interactive" required>
-    </div>
-    
-    <div class="input-group">
-      <input type="email" name="_replyto" placeholder="Your Email" class="interactive" required>
-    </div>
-    
-    <div class="input-group">
-      <textarea name="message" placeholder="Tell me about your project..." rows="4" class="interactive" required></textarea>
-    </div>
-    
-    <button type="submit" class="btn-submit interactive">Send Message</button>
-  </form>
+ <form id="cinedrift-form" action="https://formspree.io/f/xrevrgwg" method="POST" class="contact-form">
+  
+  <div class="input-group">
+    <input type="text" name="name" placeholder="Your Name" class="interactive" required>
+  </div>
+  
+  <div class="input-group">
+    <input type="email" name="_replyto" placeholder="Your Email" class="interactive" required>
+  </div>
+  
+  <div class="input-group">
+    <textarea name="message" placeholder="Tell me about your project..." rows="4" class="interactive" required></textarea>
+  </div>
+  
+  <button type="submit" class="btn-submit interactive">Send Message</button>
+  
+  <p id="form-status"></p>
+</form>
 </section>
 
   <!-- ── NEWSLETTER ── -->
@@ -1935,6 +1946,34 @@
       const io=new IntersectionObserver((es,o)=>{es.forEach(e=>{if(e.isIntersecting){load();o.disconnect();}});},{rootMargin:'200px'});
       io.observe(grid);
     })();
+  </script>
+
+  <script>
+    const contactForm = document.getElementById('cinedrift-form');
+    const formStatus = document.getElementById('form-status');
+
+    contactForm.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const data = new FormData(event.target);
+      try {
+        const response = await fetch(event.target.action, {
+          method: contactForm.method,
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (response.ok) {
+          formStatus.innerHTML = "Message sent successfully. Let's create something.";
+          formStatus.style.color = "var(--teal)"; 
+          contactForm.reset(); 
+        } else {
+          formStatus.innerHTML = "Oops! There was a problem submitting your form.";
+          formStatus.style.color = "var(--silver)";
+        }
+      } catch (error) {
+        formStatus.innerHTML = "Oops! There was a network error.";
+        formStatus.style.color = "var(--silver)";
+      }
+    });
   </script>
 
   <script>
