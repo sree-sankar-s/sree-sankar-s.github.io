@@ -735,6 +735,67 @@
     }
     .ct-email:hover { opacity: 0.7; border-color: var(--teal); }
 
+    /* Contact Form Styling */
+.contact-form {
+  max-width: 500px;
+  margin: 0 auto; /* Centers the form in the section */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: left; /* Keeps the placeholder text aligned cleanly */
+}
+
+.input-group input, 
+.input-group textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border); /* Uses your existing border variable */
+  color: #ffffff; /* Or var(--white) if you have it */
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  padding: 0.8rem 0;
+  outline: none;
+  transition: border-color 0.3s ease;
+  resize: none; /* Prevents users from dragging the text box out of shape */
+  cursor: none; /* Allows your custom cursor to take over */
+}
+
+/* Change the line to teal when the user clicks on it */
+.input-group input:focus, 
+.input-group textarea:focus {
+  border-bottom-color: var(--teal);
+}
+
+/* Style the placeholder text to match your subtitle color */
+.input-group input::placeholder, 
+.input-group textarea::placeholder {
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+/* The Submit Button */
+.btn-submit {
+  background: transparent;
+  border: 1px solid var(--teal);
+  color: var(--teal);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 1rem 2.5rem;
+  margin-top: 1rem;
+  align-self: center; /* Centers the button under the form */
+  transition: all 0.3s ease;
+  cursor: none; /* Custom cursor support */
+}
+
+.btn-submit:hover {
+  background: var(--teal);
+  color: var(--dark); /* Swaps the text to dark when hovered */
+}
+
     /* ── FOOTER ── */
     footer {
       background: var(--black);
@@ -1413,13 +1474,28 @@
   </section>
 
   <!-- ── CONTACT ── -->
-  <section id="contact">
-    <p class="ct-pre reveal">Get in Touch</p>
-    <h2 class="ct-title reveal reveal-delay-1">Let's Create<br><em>Something</em></h2>
-    <p class="ct-sub reveal reveal-delay-2">Collaborations, commissions, or just to say hello.</p>
-    <!-- ✏️ Replace with your actual email -->
-    <a href="mailto:hello@cinedriftstudios.com" class="ct-email reveal reveal-delay-3">hello@cinedriftstudios.com</a>
-  </section>
+ <section id="contact" class="reveal">
+  <div class="ct-pre">Get in Touch</div>
+  <h2 class="ct-title">Let's <em>Create</em><br>Something</h2>
+  <div class="ct-sub">Collaborations, commissions, or just to say hello.</div>
+  
+  <form action="https://formspree.io/f/xrevrgwg" method="POST" class="contact-form">
+    
+    <div class="input-group">
+      <input type="text" name="name" placeholder="Your Name" class="interactive" required>
+    </div>
+    
+    <div class="input-group">
+      <input type="email" name="_replyto" placeholder="Your Email" class="interactive" required>
+    </div>
+    
+    <div class="input-group">
+      <textarea name="message" placeholder="Tell me about your project..." rows="4" class="interactive" required></textarea>
+    </div>
+    
+    <button type="submit" class="btn-submit interactive">Send Message</button>
+  </form>
+</section>
 
   <!-- ── NEWSLETTER ── -->
   <section id="newsletter">
