@@ -416,7 +416,8 @@
     .pi:nth-child(7) { grid-column:9/13; grid-row:9/14; }
 
     .pi-bg {
-      position: absolute; inset: 0;
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover;
       transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
     }
     .pi:hover .pi-bg { transform: scale(1.06); }
@@ -1139,85 +1140,84 @@
     @media (max-width:900px){.yt-grid{grid-template-columns:1fr 1fr;}.yt-inner{padding:0 1.8rem;}}
     @media (max-width:560px){.yt-grid{grid-template-columns:1fr;}}
   
-    /* ── LIGHTBOX ── */
-    #lb-overlay {
-      display: none;
+    /* ──────────────────── LIGHTBOX ──────────────────── */
+    #lbOverlay {
       position: fixed; inset: 0; z-index: 9999;
-      background: rgba(0,0,0,0.96);
-      align-items: center; justify-content: center;
-      animation: lbFadeIn 0.25s ease;
-    }
-    #lb-overlay.open { display: flex; }
-    @keyframes lbFadeIn { from { opacity:0 } to { opacity:1 } }
-
-    #lb-img-wrap {
-      position: relative;
-      max-width: 90vw; max-height: 88vh;
+      background: rgba(6,6,10,0.97);
       display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
     }
-    #lb-img {
-      max-width: 90vw; max-height: 84vh;
+    #lbOverlay.lb-open {
+      opacity: 1; pointer-events: all;
+    }
+    #lbImg {
+      max-width: 88vw; max-height: 82vh;
       object-fit: contain;
-      border: 1px solid rgba(109,186,200,0.15);
-      box-shadow: 0 0 80px rgba(0,0,0,0.8);
-      transition: opacity 0.2s ease;
+      border: 1px solid rgba(109,186,200,0.18);
+      box-shadow: 0 0 120px rgba(0,0,0,0.9);
+      display: block;
+      transition: opacity 0.18s ease;
     }
-    #lb-img.fading { opacity: 0; }
+    #lbImg.lb-fade { opacity: 0; }
 
-    #lb-caption {
-      position: absolute; bottom: -2.4rem; left: 0; right: 0;
+    #lbWrap { position: relative; }
+
+    #lbCaption {
+      position: absolute; bottom: -2.6rem; left: 0; right: 0;
       text-align: center;
       font-family: 'Jost', sans-serif;
-      font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+      font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
       color: var(--teal);
     }
-    #lb-caption em { color: var(--muted); font-style: normal; margin-left: 0.6rem; }
+    #lbCaption span { color: rgba(255,255,255,0.3); margin-left: 0.8rem; }
 
-    .lb-btn {
-      position: fixed;
-      top: 50%; transform: translateY(-50%);
-      background: none; border: 1px solid rgba(109,186,200,0.25);
-      color: var(--teal); font-size: 1.2rem;
-      width: 48px; height: 48px;
+    .lb-arrow {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 52px; height: 52px;
+      background: rgba(8,8,8,0.7);
+      border: 1px solid rgba(109,186,200,0.22);
+      color: var(--teal); font-size: 1.3rem;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
+      cursor: pointer; z-index: 10000;
       transition: background 0.2s, border-color 0.2s;
-      z-index: 10000;
+      user-select: none;
     }
-    .lb-btn:hover { background: rgba(109,186,200,0.1); border-color: var(--teal); }
-    #lb-prev { left: 1.5rem; }
-    #lb-next { right: 1.5rem; }
+    .lb-arrow:hover { background: rgba(109,186,200,0.12); border-color: var(--teal); }
+    #lbPrev { left: 1.2rem; }
+    #lbNext { right: 1.2rem; }
 
-    #lb-close {
-      position: fixed; top: 1.2rem; right: 1.4rem;
-      background: none; border: 1px solid rgba(109,186,200,0.25);
-      color: var(--teal); font-size: 1rem;
-      width: 40px; height: 40px;
+    #lbClose {
+      position: fixed; top: 1rem; right: 1.2rem;
+      width: 42px; height: 42px;
+      background: rgba(8,8,8,0.7);
+      border: 1px solid rgba(109,186,200,0.22);
+      color: var(--teal); font-size: 1.1rem;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; z-index: 10000;
       transition: background 0.2s, border-color 0.2s;
     }
-    #lb-close:hover { background: rgba(109,186,200,0.1); border-color: var(--teal); }
+    #lbClose:hover { background: rgba(109,186,200,0.12); border-color: var(--teal); }
 
-    #lb-dots {
+    #lbCounter {
+      position: fixed; top: 1.2rem; left: 1.4rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); z-index: 10000;
+    }
+
+    #lbDots {
       position: fixed; bottom: 1.4rem; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 0.5rem; z-index: 10000;
+      display: flex; gap: 0.55rem; z-index: 10000;
     }
     .lb-dot {
-      width: 6px; height: 6px;
-      border: 1px solid rgba(109,186,200,0.4);
-      border-radius: 50%; cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(109,186,200,0.3);
+      cursor: pointer; transition: background 0.2s, border-color 0.2s;
     }
-    .lb-dot.active { background: var(--teal); border-color: var(--teal); }
-
-    #lb-counter {
-      position: fixed; top: 1.4rem; left: 1.6rem;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--muted); z-index: 10000;
-    }
-
+    .lb-dot.lb-active { background: var(--teal); border-color: var(--teal); }
+    /* ──────────────────────────────────────────────── */
     </style>
 </head>
 <body>
@@ -1304,7 +1304,7 @@
         <p class="sec-label">Portfolio</p>
         <h2 class="sec-title">Selected<br><em>Work</em></h2>
       </div>
-      <p class="work-hint">Placeholder images shown — swap <code>src</code> with your own shots when ready.</p>
+      <p class="work-hint">Click any image to open the full viewer — use arrows or swipe to browse.</p>
     </div>
 
     <div class="pgrid reveal reveal-delay-1">
@@ -1322,32 +1322,32 @@
       </div>
 
       <div class="pi" data-lb="1">
-        <img class="pi-bg" src="https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop" alt="Golden hour landscape" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <img class="pi-bg" src="https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop" alt="Golden hour">
         <div class="pi-overlay"><div class="pi-info"><h3>Golden Hour</h3><span>Mobile Photography</span></div></div>
       </div>
 
       <div class="pi" data-lb="2">
-        <img class="pi-bg" src="https://images.pexels.com/photos/3225529/pexels-photo-3225529.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop" alt="Urban night street" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <img class="pi-bg" src="https://images.pexels.com/photos/3225529/pexels-photo-3225529.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop" alt="Urban Drift">
         <div class="pi-overlay"><div class="pi-info"><h3>Urban Drift</h3><span>Mobile Photography</span></div></div>
       </div>
 
       <div class="pi" data-lb="3">
-        <img class="pi-bg" src="https://images.pexels.com/photos/1366909/pexels-photo-1366909.jpeg?auto=compress&cs=tinysrgb&w=1400&h=600&fit=crop" alt="Mountain cloudscape drone" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <img class="pi-bg" src="https://images.pexels.com/photos/1366909/pexels-photo-1366909.jpeg?auto=compress&cs=tinysrgb&w=1400&h=600&fit=crop" alt="Cinematic Reel">
         <div class="pi-overlay"><div class="pi-info"><h3>Cinematic Reel</h3><span>Drone Videography</span></div></div>
       </div>
 
       <div class="pi" data-lb="4">
-        <img class="pi-bg" src="https://images.pexels.com/photos/534614/pexels-photo-534614.jpeg?auto=compress&cs=tinysrgb&w=900&h=700&fit=crop" alt="Aerial drone view of terrain" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <img class="pi-bg" src="https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&w=900&h=700&fit=crop" alt="Terrain Study">
         <div class="pi-overlay"><div class="pi-info"><h3>Terrain Study</h3><span>Drone Photography</span></div></div>
       </div>
 
       <div class="pi" data-lb="5">
-        <img class="pi-bg" src="https://images.pexels.com/photos/1540258/pexels-photo-1540258.jpeg?auto=compress&cs=tinysrgb&w=900&h=700&fit=crop" alt="Long exposure light trails" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-        <div class="pi-overlay"><div class="pi-info"><h3>Motion & Light</h3><span>Mobile Videography</span></div></div>
+        <img class="pi-bg" src="https://images.pexels.com/photos/1540258/pexels-photo-1540258.jpeg?auto=compress&cs=tinysrgb&w=900&h=700&fit=crop" alt="Motion and Light">
+        <div class="pi-overlay"><div class="pi-info"><h3>Motion &amp; Light</h3><span>Mobile Videography</span></div></div>
       </div>
 
       <div class="pi" data-lb="6">
-        <img class="pi-bg" src="https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=900&h=700&fit=crop" alt="City skyline at night" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <img class="pi-bg" src="https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=900&h=700&fit=crop" alt="Skyline Series">
         <div class="pi-overlay"><div class="pi-info"><h3>Skyline Series</h3><span>Drone Photography</span></div></div>
       </div>
 
@@ -2054,129 +2054,140 @@
     // Instagram live feed loader (Behold)
     (function(){var s=document.createElement("script");s.type="module";s.src="https://w.behold.so/widget.js";document.head.appendChild(s);})();
   
-    // ── Portfolio Lightbox
+    // ── Lightbox
     (function(){
-      const overlay = document.getElementById('lb-overlay');
-      const img     = document.getElementById('lb-img');
-      const caption = document.getElementById('lb-caption');
-      const counter = document.getElementById('lb-counter');
-      const dotsWrap= document.getElementById('lb-dots');
-      const tiles   = Array.from(document.querySelectorAll('.pi[data-lb]'));
+      var overlay  = document.getElementById('lbOverlay');
+      var imgEl    = document.getElementById('lbImg');
+      var caption  = document.getElementById('lbCaption');
+      var counter  = document.getElementById('lbCounter');
+      var dotsWrap = document.getElementById('lbDots');
+      var prevBtn  = document.getElementById('lbPrev');
+      var nextBtn  = document.getElementById('lbNext');
+      var closeBtn = document.getElementById('lbClose');
 
-      // Build image list from tiles
-      function getTileData(tile) {
-        const imgEl = tile.querySelector('img.pi-bg');
-        const h3    = tile.querySelector('.pi-info h3');
-        const span  = tile.querySelector('.pi-info span');
+      var tiles = Array.from(document.querySelectorAll('.pi[data-lb]'));
+      var current = 0;
+      var isOpen = false;
+      var touchStartX = 0;
+
+      // Build dots
+      tiles.forEach(function(_, i){
+        var dot = document.createElement('div');
+        dot.className = 'lb-dot';
+        dot.addEventListener('click', function(){ goTo(i); });
+        dotsWrap.appendChild(dot);
+      });
+      var dots = Array.from(dotsWrap.querySelectorAll('.lb-dot'));
+
+      function getInfo(tile){
+        var img   = tile.querySelector('img.pi-bg');
+        var title = tile.querySelector('.pi-info h3');
+        var cat   = tile.querySelector('.pi-info span');
         return {
-          src:   imgEl ? imgEl.src : '',
-          title: h3   ? h3.textContent : '',
-          cat:   span ? span.textContent : '',
-          hasImg: !!imgEl
+          src:   img   ? img.src   : '',
+          title: title ? title.textContent : '',
+          cat:   cat   ? cat.textContent  : '',
+          hasImg: !!img
         };
       }
 
-      // Build dots
-      tiles.forEach((_, i) => {
-        const dot = document.createElement('button');
-        dot.className = 'lb-dot';
-        dot.setAttribute('aria-label', 'Go to image ' + (i+1));
-        dot.addEventListener('click', () => goTo(i));
-        dotsWrap.appendChild(dot);
-      });
-      const dots = Array.from(dotsWrap.querySelectorAll('.lb-dot'));
+      function updateDots(idx){
+        dots.forEach(function(d,i){ d.classList.toggle('lb-active', i===idx); });
+      }
 
-      let current = 0;
-
-      function goTo(idx, instant) {
-        const data = getTileData(tiles[idx]);
-        if (!data.hasImg) {
-          // skip tiles without images
-          const dir = idx > current ? 1 : -1;
-          const next = ((idx + dir) + tiles.length) % tiles.length;
-          if (next !== current) goTo(next, instant);
-          return;
-        }
+      function goTo(idx){
+        var info = getInfo(tiles[idx]);
+        if(!info.hasImg) return;
         current = idx;
-
-        if (instant) {
-          img.src = data.src;
-        } else {
-          img.classList.add('fading');
-          setTimeout(() => {
-            img.src = data.src;
-            img.alt = data.title;
-            img.classList.remove('fading');
-          }, 200);
-        }
-
-        caption.innerHTML = data.title + (data.cat ? '<em>' + data.cat + '</em>' : '');
+        imgEl.classList.add('lb-fade');
+        setTimeout(function(){
+          imgEl.src = info.src;
+          imgEl.alt = info.title;
+          imgEl.classList.remove('lb-fade');
+        }, 180);
+        caption.innerHTML = info.title + (info.cat ? '<span>' + info.cat + '</span>' : '');
         counter.textContent = (idx + 1) + ' / ' + tiles.length;
-        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        updateDots(idx);
       }
 
-      function open(idx) {
-        goTo(idx, true);
-        overlay.classList.add('open');
+      function open(idx){
+        var info = getInfo(tiles[idx]);
+        if(!info.hasImg) return;
+        current = idx;
+        imgEl.src = info.src;
+        imgEl.alt = info.title;
+        caption.innerHTML = info.title + (info.cat ? '<span>' + info.cat + '</span>' : '');
+        counter.textContent = (idx + 1) + ' / ' + tiles.length;
+        updateDots(idx);
+        overlay.classList.add('lb-open');
         document.body.style.overflow = 'hidden';
+        isOpen = true;
       }
 
-      function close() {
-        overlay.classList.remove('open');
+      function close(){
+        overlay.classList.remove('lb-open');
         document.body.style.overflow = '';
+        isOpen = false;
       }
 
-      function prev() { goTo((current - 1 + tiles.length) % tiles.length); }
-      function next() { goTo((current + 1) % tiles.length); }
+      function prev(){
+        var idx = (current - 1 + tiles.length) % tiles.length;
+        // skip tiles without images
+        var attempts = 0;
+        while(!getInfo(tiles[idx]).hasImg && attempts < tiles.length){
+          idx = (idx - 1 + tiles.length) % tiles.length;
+          attempts++;
+        }
+        goTo(idx);
+      }
 
-      // Click tiles to open
-      tiles.forEach((tile, i) => {
-        tile.style.cursor = 'none';
-        tile.addEventListener('click', () => {
-          const data = getTileData(tile);
-          if (data.hasImg) open(i);
-        });
+      function next(){
+        var idx = (current + 1) % tiles.length;
+        var attempts = 0;
+        while(!getInfo(tiles[idx]).hasImg && attempts < tiles.length){
+          idx = (idx + 1) % tiles.length;
+          attempts++;
+        }
+        goTo(idx);
+      }
+
+      // Click tiles to open lightbox
+      tiles.forEach(function(tile, i){
+        tile.addEventListener('click', function(){ open(i); });
       });
 
-      // Controls
-      document.getElementById('lb-prev').addEventListener('click', prev);
-      document.getElementById('lb-next').addEventListener('click', next);
-      document.getElementById('lb-close').addEventListener('click', close);
-      overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+      prevBtn.addEventListener('click',  function(e){ e.stopPropagation(); prev(); });
+      nextBtn.addEventListener('click',  function(e){ e.stopPropagation(); next(); });
+      closeBtn.addEventListener('click', function(){ close(); });
+      overlay.addEventListener('click',  function(e){ if(e.target===overlay) close(); });
 
-      // Keyboard
-      document.addEventListener('keydown', e => {
-        if (!overlay.classList.contains('open')) return;
-        if (e.key === 'ArrowLeft')  prev();
-        if (e.key === 'ArrowRight') next();
-        if (e.key === 'Escape')     close();
+      document.addEventListener('keydown', function(e){
+        if(!isOpen) return;
+        if(e.key==='ArrowLeft')  prev();
+        if(e.key==='ArrowRight') next();
+        if(e.key==='Escape')     close();
       });
 
-      // Touch/swipe
-      let touchX = null;
-      overlay.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, {passive:true});
-      overlay.addEventListener('touchend',   e => {
-        if (touchX === null) return;
-        const dx = e.changedTouches[0].clientX - touchX;
-        if (Math.abs(dx) > 40) dx < 0 ? next() : prev();
-        touchX = null;
+      overlay.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, {passive:true});
+      overlay.addEventListener('touchend',   function(e){
+        var dx = e.changedTouches[0].clientX - touchStartX;
+        if(Math.abs(dx) > 45){ dx < 0 ? next() : prev(); }
       }, {passive:true});
     })();
 
   </script>
 
   <!-- ── LIGHTBOX ── -->
-  <div id="lb-overlay" role="dialog" aria-modal="true" aria-label="Image viewer">
-    <span id="lb-counter"></span>
-    <button class="lb-btn" id="lb-prev" aria-label="Previous image">&#8592;</button>
-    <div id="lb-img-wrap">
-      <img id="lb-img" src="" alt="">
-      <div id="lb-caption"></div>
+  <div id="lbOverlay">
+    <div id="lbCounter"></div>
+    <button class="lb-arrow" id="lbPrev">&#8592;</button>
+    <div id="lbWrap">
+      <img id="lbImg" src="" alt="">
+      <div id="lbCaption"></div>
     </div>
-    <button class="lb-btn" id="lb-next" aria-label="Next image">&#8594;</button>
-    <button id="lb-close" aria-label="Close viewer">&#10005;</button>
-    <div id="lb-dots"></div>
+    <button class="lb-arrow" id="lbNext">&#8594;</button>
+    <button id="lbClose">&#10005;</button>
+    <div id="lbDots"></div>
   </div>
-
 </body>
 </html>
